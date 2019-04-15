@@ -8,7 +8,8 @@ physical characteristics.
 
 Data analysis 2 involves development of a regression model; and, also address
 development of binary decision rules and a Receiver Operating Characteristic
-(ROC) curve
+(ROC) curve.
+
 Abalones are an economic and recreational resource that is threatened by a variety of factors
 which include: pollution, disease, loss of habitat, predation, commercial harvesting, sport
 fishing and illegal harvesting. Environmental variation and the availability of nutrients affect the
@@ -25,6 +26,7 @@ Currently, age is determined by drilling the shell and counting the number of sh
 microscope. This is a difficult and time consuming process. Ring clarity can be an issue. At the
 completion of the breeding season sexing abalone can be difficult. Similar difficulties are
 experienced when trying to determine the sex of immature abalone.
+
 The study was not successful. The investigators concluded additional information would be
 required such as weather patterns and location which affect food availability.
 
