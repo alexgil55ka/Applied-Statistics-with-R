@@ -2,9 +2,13 @@
 Projects in R
 
 Code can be provided if requested. 
-This is an exploratory data analysis to determine plausible reasons
+Data analysis 1 is an exploratory data analysis to determine plausible reasons
 why the original study was unsuccessful in predicting abalone age based on
 physical characteristics. 
+
+Data analysis 2 involves development of a regression model; and, also address
+development of binary decision rules and a Receiver Operating Characteristic
+(ROC) curve
 Abalones are an economic and recreational resource that is threatened by a variety of factors
 which include: pollution, disease, loss of habitat, predation, commercial harvesting, sport
 fishing and illegal harvesting. Environmental variation and the availability of nutrients affect the
