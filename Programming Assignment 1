@@ -1,0 +1,202 @@
+Create a vector that contains the following, in this order, and output the final, resulting vector. Do not round any values, unless requested. * A sequence of integers from 0 to 4, inclusive. * The number 13 * Three repetitions of the vector c(2, -5.1, -23). * The arithmetic sum of 7/42, 3 and 35/42
+
+ a <-c(1:4,13,rep(c(2,-5.1,-23),3),sum((7/42),3,(35/42)))
+(1)(b) Sort the vector created in (1)(a) in ascending order. Output this result. Determine the length of the resulting vector and assign to “L”. Output L. Generate a descending sequence starting with L and ending with 1. Add this descending sequence arithmetically the sorted vector. This is vector addition, not vector combination. Output the contents. Do not round any values.
+
+sort(a,decreasing=FALSE)
+##  [1] -23.0 -23.0 -23.0  -5.1  -5.1  -5.1   1.0   2.0   2.0   2.0   2.0
+## [12]   3.0   4.0   4.0  13.0
+L <-length(sort(a,decreasing=FALSE))
+L
+## [1] 15
+sort(seq(from = L, to = 1),decreasing = TRUE)
+##  [1] 15 14 13 12 11 10  9  8  7  6  5  4  3  2  1
+addition <- (sort(seq(from = L, to = 1),decreasing = TRUE)) + (sort(a,decreasing=FALSE))
+(1)(c) Extract the first and last elements of the vector you have created in (1)(b) to form another vector of the extracted elements. Form a third vector from the elements not extracted. Output these vectors.
+
+extracted <- c(head(addition,1),tail(addition,1))
+not_extracted <- c(addition[2:14])
+extracted
+## [1] -8 14
+not_extracted
+##  [1]  -9.0 -10.0   6.9   5.9   4.9  10.0  10.0   9.0   8.0   7.0   7.0
+## [12]   7.0   6.0
+(1)(d) Use the vectors from (c) to reconstruct the vector in (b). Output this vector. Sum the elements and round to two decimal places.
+
+reconstruct <- c(extracted[1],not_extracted,extracted[2])
+reconstruct
+##  [1]  -8.0  -9.0 -10.0   6.9   5.9   4.9  10.0  10.0   9.0   8.0   7.0
+## [12]   7.0   7.0   6.0  14.0
+reconstructedsum <- sum(reconstruct)
+format(reconstructedsum, nsmall = 2)
+## [1] "68.70"
+(2) (5 points) The expression y = sin(x/2) + cos(x/2) is a trigonometric function.
+
+(2)(a) Create a user-defined function - via function() - that implements the trigonometric function above, accepts numeric values, “x,” calculates and returns values “y.”
+
+trig <- function(x) {
+   y<-sin(x/2) + cos(x/2)
+  return(y)
+}
+
+(2)(b) Create a vector, x, of 4001 equally-spaced values from -2 to 2, inclusive. Compute values for y using the vector x and your function from (2)(a). Do not output x or y. Find the value in the vector x that corresponds to the maximum value in the vector y. Restrict attention to only the values of x and y you have computed; i.e. do not interpolate. Round to 3 decimal places and output both the maximum y and corresponding x value.
+
+Finding the two desired values can be accomplished in as few as two lines of code. Do not use packages or programs you may find on the internet or elsewhere. Do not output the other elements of the vectors x and y. Relevant coding methods are given in the Quick Start Guide for R.
+
+x <- seq(from = -2, to = 2, length.out = 4001)
+loc <- (c(round(max(trig(x)),3),(round(max(trig(x)),3))))
+loc
+## [1] 1.414 1.414
+(2)(c) Plot y versus x in color, with x on the horizontal axis. Show the location of the maximum value of y determined in 2(b). Show the values of x and y corresponding to the maximum value of y in the display. Add a title and other features such as text annotations. Text annotations may be added via text() for base R plots and geom_text() or geom_label() for ggplots.
+
+plot(x,trig(x),type = "l",col = "blue",xlab = "x",ylab = "y", main = "sin(x/2)+cos(x/2) with X in -2 to 2")
+points(x = 1.414, y = 1.414, col = "red", pch =19)
+
+
+(3) This problem requires finding the point of intersection of two functions. Using the function y = cos(x/2)*sin(x/2), find where the curved line y = -(x/2)^3 intersects it within the range of values used in part (2) (i.e. 4001 equally-spaced values from -2 to 2). Plot both functions on the same display, and show the point of intersection. Present the coordinates of this point as text in the display.
+
+#Function 1
+y1 <- function(x){
+  y <- cos(x/2)*sin(x/2)
+}
+#Function 2
+y2 <- function(X){
+  -(x/2)^3
+}
+
+#Sequence of numbers
+x <- seq(from = -2, to = 2, length.out = 4001)
+plot(x,y1(x), type="l",col="red")
+lines(x,y2(x), col="blue")
+text(x = 0, y = 0,labels = "0,0",col="black")
+
+
+(4)Use the “trees” dataset for the following items. This dataset has three variables (Girth, Height, Volume) on 31 felled black cherry trees.
+
+(4)(a) Use data(trees) to load the dataset. Check and output the structure with str(). Use apply() to return the median values for the three variables. Output these values. Using R and logicals, output the row number and the three measurements - Girth, Height and Volume - of any trees with Girth equal to median Girth. It is possible to accomplish this last request with one line of code.
+
+"Importing the data"
+## [1] "Importing the data"
+data(trees)
+"Structure of the data"
+## [1] "Structure of the data"
+str(trees)
+## 'data.frame':    31 obs. of  3 variables:
+##  $ Girth : num  8.3 8.6 8.8 10.5 10.7 10.8 11 11 11.1 11.2 ...
+##  $ Height: num  70 65 63 72 81 83 66 75 80 75 ...
+##  $ Volume: num  10.3 10.3 10.2 16.4 18.8 19.7 15.6 18.2 22.6 19.9 ...
+"Median of Variables"
+## [1] "Median of Variables"
+apply(trees,2,median)
+##  Girth Height Volume 
+##   12.9   76.0   24.2
+trees[which(trees$Girth==12.9),]
+##    Girth Height Volume
+## 16  12.9     74   22.2
+## 17  12.9     85   33.8
+(4)(b) Girth is defined as the diameter of a tree taken at 4 feet 6 inches from the ground. Convert each diameter to a radius, r. Calculate the cross-sectional area of each tree using pi times the squared radius. Present a stem-and-leaf plot of the radii, and a histogram of the radii in color. Plot Area (y-axis) versus Radius (x-axis) in color showing the individual data points. Label appropriately.
+
+r <- (trees$Girth)/2
+cs_area <- (pi*(r^2))
+par(mfrow = c(2,1))
+stem(r)
+## 
+##   The decimal point is at the |
+## 
+##    4 | 234
+##    5 | 33455567778
+##    6 | 055789
+##    7 | 013
+##    8 | 02789
+##    9 | 00
+##   10 | 3
+hist(r,breaks = 7, col=c("blue","red","yellow","green","gray","orange","black"), main ="Radius")
+plot(r,cs_area, col = "red", type = "p", xlab = "Radius", ylab = "Area", pch=19)
+
+
+(4)(c) Present a horizontal, notched, colored boxplot of the areas calculated in (b). Title and label the axis.
+
+boxplot(cs_area,notch = TRUE,horizontal =TRUE, col = "#009999", xlab = "Areas", ylab = "Trees", main = "Area of Trees")
+
+
+(4)(d) Demonstrate that the outlier revealed in the boxplot of Volume is not an extreme outlier. It is possible to do this with one line of code using boxplot.stats() or ‘manual’ calculation and logicals. Identify the tree with the largest area and output on one line its row number and three measurements.
+
+boxplot.stats(cs_area, coef = 3.0)
+## $stats
+## [1]  54.10608  95.90104 130.69811 183.09595 333.29156
+## 
+## $n
+## [1] 31
+## 
+## $conf
+## [1] 105.9543 155.4420
+## 
+## $out
+## numeric(0)
+#By the ouput '$out' yield numeric(0) we can see that the the outlier is not extreme
+trees[which.max(cs_area),]
+##    Girth Height Volume
+## 31  20.6     87     77
+
+(5) The exponential distribution is an example of a right-skewed distribution with outliers. This problem involves comparing it with a normal distribution which typically has very few outliers.
+
+5(a) Use set.seed(124) and rexp() with n = 100, rate = 5.5 to generate a random sample designated as y. Generate a second random sample designated as x with set.seed(127) and rnorm() using n = 100, mean = 0 and sd = 0.15.
+
+Generate a new object using cbind(x, y). Do not output this object; instead, assign it to a new name. Pass this object to apply() and compute the inter-quartile range (IQR) for each column: x and y. Use the function IQR() for this purpose. Round the results to four decimal places and present (this exercise shows the similarity of the IQR values.).
+
+For information about rexp(), use help(rexp) or ?rexp(). Do not output x or y.
+
+set.seed(124)
+y <- rexp(n = 100, rate = 5.5)
+set.seed(127)
+x <- rnorm(n = 100, mean = 0, sd = 0.15)
+
+z <- cbind(x,y)
+round(apply(z, 2, IQR),4)
+##      x      y 
+## 0.2041 0.2164
+(5)(b) This item will illustrate the difference between a right-skewed distribution and a symmetric one. For base R plots, use par(mfrow = c(2, 2)) to generate a display with four diagrams; grid.arrange() for ggplots. On the first row, for the normal results, present a histogram and a horizontal boxplot for x in color. For the exponential results, present a histogram and a horizontal boxplot for y in color.
+
+par(mfrow = c(2,2))
+hist(x, breaks = 10, col ="blue")
+boxplot(x,horizontal = TRUE, col= "blue")
+hist(y, breaks = 10, col = "gray")
+boxplot(y, horizontal = TRUE, col = "gray")
+
+
+(5)(c) QQ plots are useful for detecting the presence of heavy-tailed distributions. Present side-by-side QQ plots, one for each sample, using qqnorm() and qqline(). Add color and titles. In base R plots, “cex” can be used to control the size of the plotted data points and text. Lastly, determine if there are any extreme outliers in either sample.
+
+par(mfrow = c(1,2))
+qqnorm(x, col="gold", main = "QQ Plot of X")
+qqline(x)
+qqnorm(y,col="red", main = "QQ plot of Y")
+qqline(y)
+
+
+#Outliers in x
+boxplot.stats(x, coef = 3.0 )
+## $stats
+## [1] -0.2976325808 -0.1007240230  0.0003706968  0.1088532648  0.4310592908
+## 
+## $n
+## [1] 100
+## 
+## $conf
+## [1] -0.03274251  0.03348391
+## 
+## $out
+## numeric(0)
+#Outliers in Y
+boxplot.stats(y, coef = 3.0)
+## $stats
+## [1] 0.003880211 0.053278194 0.152793270 0.271774062 0.667719381
+## 
+## $n
+## [1] 100
+## 
+## $conf
+## [1] 0.1182709 0.1873156
+## 
+## $out
+## [1] 1.448679
+#As you can see there are outliers in the y sample
